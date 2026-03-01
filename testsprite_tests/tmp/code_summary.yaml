@@ -1,0 +1,62 @@
+version: "2"
+type: frontend
+tech_stack:
+  - react
+  - vite
+  - tailwindcss
+  - react-router-dom
+routes:
+  - path: /
+    file: frontend/src/pages/Home.jsx
+    auth_required: false
+    description: Home page listing all events
+  - path: /event/:id
+    file: frontend/src/pages/EventDetails.jsx
+    auth_required: false
+    description: Event details page
+  - path: /admin/login
+    file: frontend/src/pages/AdminLogin.jsx
+    auth_required: false
+    description: Admin login page
+  - path: /admin/dashboard
+    file: frontend/src/pages/AdminDashboard.jsx
+    auth_required: true
+    description: Admin dashboard page
+  - path: /admin/add-event
+    file: frontend/src/pages/AddEvent.jsx
+    auth_required: true
+    description: Page to add new event
+  - path: /admin/manage-events
+    file: frontend/src/pages/ManageEvents.jsx
+    auth_required: true
+    description: Page to list out admin events and manage them
+  - path: /admin/participants
+    file: frontend/src/pages/Participants.jsx
+    auth_required: true
+    description: Page for managing participants
+features:
+  - name: Admin Login
+    description: Admin logs in with credentials
+    files:
+      - frontend/src/pages/AdminLogin.jsx
+    entry_route: /admin/login
+    user_interactions:
+      - Fill email/password input field
+      - Click Login button to submit
+    api_calls:
+      - method: POST
+        endpoint: /api/admin/login
+    auth_required: false
+  - name: List Events
+    description: View all events
+    files:
+      - frontend/src/pages/Home.jsx
+    entry_route: /
+    user_interactions:
+      - View list of events
+      - Click event to see details
+    api_calls:
+      - method: GET
+        endpoint: /api/events
+    auth_required: false
+known_limitations: []

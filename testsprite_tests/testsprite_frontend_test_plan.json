@@ -1,0 +1,2117 @@
+[
+  {
+    "id": "TC001",
+    "title": "Admin login with valid credentials redirects to Admin Dashboard",
+    "description": "Verifies that an admin can log in successfully and is redirected to the admin dashboard.",
+    "category": "Admin Login",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Admin Login\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the email input field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123\" into the password input field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/dashboard\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Admin Dashboard\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC002",
+    "title": "Admin login fails with incorrect email and incorrect password",
+    "description": "Verifies that invalid credentials show an error and the user remains on the login page.",
+    "category": "Admin Login",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"wrong-admin@example.com\" into the email input field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"WrongPassword123!\" into the password input field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/login\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"invalid\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC003",
+    "title": "Admin login fails with correct email and incorrect password",
+    "description": "Verifies that a wrong password for a likely-valid user shows an invalid-credentials error and stays on the login page.",
+    "category": "Admin Login",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the email input field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"DefinitelyWrongPassword!\" into the password input field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/login\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"invalid\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC004",
+    "title": "Inline validation when email is empty and password is provided",
+    "description": "Verifies that submitting without an email shows an inline validation error and does not leave the login page.",
+    "category": "Admin Login",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123\" into the password input field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/login\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"email\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"required\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC005",
+    "title": "Inline validation when password is empty and email is provided",
+    "description": "Verifies that submitting without a password shows an inline validation error and does not leave the login page.",
+    "category": "Admin Login",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the email input field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/login\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"password\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"required\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC006",
+    "title": "Inline validation when both email and password are empty",
+    "description": "Verifies that submitting with both fields empty shows validation errors and remains on the login page.",
+    "category": "Admin Login",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/login\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"email\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"password\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"required\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC007",
+    "title": "Login form supports keyboard submission with Enter key",
+    "description": "Verifies that pressing Enter in the password field submits the form and logs in successfully.",
+    "category": "Admin Login",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the email input field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123\" into the password input field"
+      },
+      {
+        "type": "action",
+        "description": "Press \"Enter\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/dashboard\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Admin Dashboard\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC008",
+    "title": "Home page shows a list of event cards with key summary fields",
+    "description": "Verifies that the home page renders a visible list of events and each card shows expected summary information.",
+    "category": "List Events (Home)",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify page title contains \"Event\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Events\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"an event card\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"event title on a card\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"event location on a card\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"event time on a card\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC009",
+    "title": "Open event details from the first event card",
+    "description": "Verifies that clicking an event card navigates to its details page and shows full details with a Join button.",
+    "category": "List Events (Home)",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"an event card\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"the first event card\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/event/\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"event details title\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"full event description\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Join\" button is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC010",
+    "title": "Event cards show short description preview text",
+    "description": "Verifies that the home page event cards display a short description snippet to help discovery.",
+    "category": "List Events (Home)",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"an event card\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"short description text on a card\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"the first event card\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/event/\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"full event description\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC011",
+    "title": "Event details page content differs from the card preview (full details present)",
+    "description": "Verifies that after opening an event, the details page exposes more complete information than the card summary.",
+    "category": "List Events (Home)",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"an event card\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"the first event card\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/event/\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"event date/time in details\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"event location in details\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Join\" button is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC012",
+    "title": "Home page handles empty events state gracefully",
+    "description": "Verifies that when no events are available, the home page shows an empty state message instead of a broken list.",
+    "category": "List Events (Home)",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"No events\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"available\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"an event card\" is not visible"
+      }
+    ]
+  },
+  {
+    "id": "TC013",
+    "title": "Home page remains usable when events list is long (scroll to more events)",
+    "description": "Verifies that users can scroll the home page and still see additional events listed.",
+    "category": "List Events (Home)",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"an event card\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to \"the bottom of the events list\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"an event card near the bottom\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"an event card near the bottom\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/event/\""
+      }
+    ]
+  },
+  {
+    "id": "TC014",
+    "title": "View event details content on Event Details page",
+    "description": "Verifies that the Event Details page shows core event information and the join form is available.",
+    "category": "Event Details & Join",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Events\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on the first visible event in the events list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/event/\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Location\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Registered\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Full Name\" field is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Email Address\" field is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC015",
+    "title": "Join event successfully with valid Full Name and Email Address",
+    "description": "Verifies a user can join an event and sees a success message and updated registered users count.",
+    "category": "Event Details & Join",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click on the first visible event in the events list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/event/\""
+      },
+      {
+        "type": "action",
+        "description": "Type \"Test User\" into the \"Full Name\" field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"test.user+e2e@example.com\" into the \"Email Address\" field"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Join\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"success\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Registered\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC016",
+    "title": "Email validation error when Email Address is left empty",
+    "description": "Verifies the join form prevents submission when Email Address is missing and shows a validation error.",
+    "category": "Event Details & Join",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click on the first visible event in the events list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/event/\""
+      },
+      {
+        "type": "action",
+        "description": "Type \"Test User\" into the \"Full Name\" field"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Join\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Email\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"required\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/event/\""
+      }
+    ]
+  },
+  {
+    "id": "TC017",
+    "title": "Email validation error when Email Address format is invalid",
+    "description": "Verifies the join form blocks submission for an invalid email format and keeps the user on the Event Details page.",
+    "category": "Event Details & Join",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click on the first visible event in the events list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/event/\""
+      },
+      {
+        "type": "action",
+        "description": "Type \"Test User\" into the \"Full Name\" field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"not-an-email\" into the \"Email Address\" field"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Join\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"valid\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Email\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/event/\""
+      }
+    ]
+  },
+  {
+    "id": "TC018",
+    "title": "Join form requires Full Name before submission (client-side validation)",
+    "description": "Verifies the join form blocks submission when Full Name is missing and shows a validation message.",
+    "category": "Event Details & Join",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click on the first visible event in the events list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/event/\""
+      },
+      {
+        "type": "action",
+        "description": "Type \"test.user+missingname@example.com\" into the \"Email Address\" field"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Join\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Full Name\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"required\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/event/\""
+      }
+    ]
+  },
+  {
+    "id": "TC019",
+    "title": "User can dismiss success modal/toast after joining",
+    "description": "Verifies that the success feedback can be dismissed and the page remains usable on Event Details.",
+    "category": "Event Details & Join",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click on the first visible event in the events list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/event/\""
+      },
+      {
+        "type": "action",
+        "description": "Type \"Toast Dismiss User\" into the \"Full Name\" field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"toast.dismiss.user@example.com\" into the \"Email Address\" field"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Join\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"success\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Close\" button in the success message"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Join\" button is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC020",
+    "title": "Registered users count is present before and after attempting to join",
+    "description": "Verifies the registered users count is visible on the Event Details page and remains visible after a join attempt.",
+    "category": "Event Details & Join",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click on the first visible event in the events list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/event/\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Registered\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Count Check User\" into the \"Full Name\" field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"count.check.user@example.com\" into the \"Email Address\" field"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Join\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Registered\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC021",
+    "title": "Admin can access dashboard and see key UI sections",
+    "description": "Verifies an authenticated admin can load the dashboard and see core dashboard UI sections.",
+    "category": "Admin Dashboard",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the username or email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/dashboard\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Dashboard\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Sidebar navigation\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Top bar\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC022",
+    "title": "Dashboard shows metrics/overview content after login",
+    "description": "Verifies that dashboard overview metrics/content are visible to an authenticated admin.",
+    "category": "Admin Dashboard",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the username or email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/dashboard\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Total\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Dashboard metrics\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC023",
+    "title": "Navigate from Dashboard to Add Event using sidebar link",
+    "description": "Verifies the Add Event sidebar navigation from the dashboard routes to the Add Event page.",
+    "category": "Admin Dashboard",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the username or email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Add Event\" in the sidebar"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/add-event\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Add Event\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC024",
+    "title": "Navigate from Dashboard to Manage Events using sidebar link",
+    "description": "Verifies the Manage Events sidebar navigation from the dashboard routes to the Manage Events page.",
+    "category": "Admin Dashboard",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the username or email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Manage Events\" in the sidebar"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/manage-events\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Manage\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC025",
+    "title": "Navigate from Dashboard to Participants using sidebar link",
+    "description": "Verifies the Participants sidebar navigation from the dashboard routes to the Participants management page.",
+    "category": "Admin Dashboard",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the username or email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Participants\" in the sidebar"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/participants\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Participants\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC026",
+    "title": "Logout from dashboard returns to admin login",
+    "description": "Verifies an authenticated admin can log out from the dashboard and is returned to the admin login page.",
+    "category": "Admin Dashboard",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the username or email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Logout\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/login\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Admin Login\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC027",
+    "title": "Toggle theme from dashboard changes visible theme indicator",
+    "description": "Verifies the theme toggle on the dashboard causes a visible UI change (text/icon/label).",
+    "category": "Admin Dashboard",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the username or email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click the theme toggle control"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Theme toggle state indicator\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC028",
+    "title": "Create and publish a new event successfully and verify it appears in Manage Events",
+    "description": "Verifies an admin can create a new event with valid data, publish it, see success confirmation, and find it listed in Manage Events.",
+    "category": "Add Event",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the username or email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Add Event\" link or menu item"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/add-event\""
+      },
+      {
+        "type": "action",
+        "description": "Type \"Automation Test Event - Published\" into the Title field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"This is a test event created by automated UI testing.\" into the Description field"
+      },
+      {
+        "type": "action",
+        "description": "Type a valid future date and time into the Event Date/Time field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"1\" into the Minimum Users field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"10\" into the Maximum Users field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Main Hall\" into the Location field"
+      },
+      {
+        "type": "action",
+        "description": "Select a Category option from the Category dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Click the Publish toggle to turn it on"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Submit\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"success\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Manage Events\" link or menu item"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/manage-events\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Automation Test Event - Published\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC029",
+    "title": "Create a new event without publishing and verify it appears in Manage Events",
+    "description": "Verifies an admin can create a new event while Publish remains off, see success confirmation, and find it listed in Manage Events.",
+    "category": "Add Event",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the username or email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Add Event\" link or menu item"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/add-event\""
+      },
+      {
+        "type": "action",
+        "description": "Type \"Automation Test Event - Unpublished\" into the Title field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"This event is created with publish turned off.\" into the Description field"
+      },
+      {
+        "type": "action",
+        "description": "Type a valid future date and time into the Event Date/Time field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"2\" into the Minimum Users field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"20\" into the Maximum Users field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Conference Room B\" into the Location field"
+      },
+      {
+        "type": "action",
+        "description": "Select a Category option from the Category dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Submit\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"success\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Manage Events\" link or menu item"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/manage-events\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Automation Test Event - Unpublished\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC030",
+    "title": "Submit with all required fields empty and verify inline validation errors",
+    "description": "Verifies submitting an empty Add Event form shows validation errors and the admin remains on the Add Event page.",
+    "category": "Add Event",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the username or email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Add Event\" link or menu item"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/add-event\""
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Submit\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"required\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/add-event\""
+      }
+    ]
+  },
+  {
+    "id": "TC031",
+    "title": "Validation: Minimum Users greater than Maximum Users blocks submission",
+    "description": "Verifies the form prevents submission when Minimum Users is greater than Maximum Users and shows an inline validation message.",
+    "category": "Add Event",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the username or email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Add Event\" link or menu item"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/add-event\""
+      },
+      {
+        "type": "action",
+        "description": "Type \"Automation Test Event - Invalid Min/Max\" into the Title field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Testing validation when min users exceeds max users.\" into the Description field"
+      },
+      {
+        "type": "action",
+        "description": "Type a valid future date and time into the Event Date/Time field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"50\" into the Minimum Users field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"10\" into the Maximum Users field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Test Location\" into the Location field"
+      },
+      {
+        "type": "action",
+        "description": "Select a Category option from the Category dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Submit\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"minimum\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/add-event\""
+      }
+    ]
+  },
+  {
+    "id": "TC032",
+    "title": "Validation: Event date/time in the past blocks submission",
+    "description": "Verifies the form prevents submission when an event date/time in the past is entered and shows a visible validation message.",
+    "category": "Add Event",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the username or email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Add Event\" link or menu item"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/add-event\""
+      },
+      {
+        "type": "action",
+        "description": "Type \"Automation Test Event - Past Date\" into the Title field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Testing validation for past dates.\" into the Description field"
+      },
+      {
+        "type": "action",
+        "description": "Type a past date and time into the Event Date/Time field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"1\" into the Minimum Users field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"5\" into the Maximum Users field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Old Venue\" into the Location field"
+      },
+      {
+        "type": "action",
+        "description": "Select a Category option from the Category dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Submit\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"date\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/add-event\""
+      }
+    ]
+  },
+  {
+    "id": "TC033",
+    "title": "Validation: Non-numeric user limits show errors and prevent submission",
+    "description": "Verifies the form shows validation errors when non-numeric values are entered for Minimum/Maximum Users and does not submit.",
+    "category": "Add Event",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the username or email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/dashboard\""
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Add Event\" link or menu item"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/add-event\""
+      },
+      {
+        "type": "action",
+        "description": "Type \"Automation Test Event - Non Numeric Limits\" into the Title field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Testing numeric field validation.\" into the Description field"
+      },
+      {
+        "type": "action",
+        "description": "Type a valid future date and time into the Event Date/Time field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"abc\" into the Minimum Users field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"xyz\" into the Maximum Users field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Numeric Test Hall\" into the Location field"
+      },
+      {
+        "type": "action",
+        "description": "Select a Category option from the Category dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Submit\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"number\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/add-event\""
+      }
+    ]
+  },
+  {
+    "id": "TC034",
+    "title": "Edit an existing event and verify the updated values appear in the events list",
+    "description": "Verifies an admin can edit an event, save changes, and see confirmation plus updated event details in the list.",
+    "category": "Manage Events",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the username or email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Manage Events\" in the admin navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Manage Events\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a table or list of events is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Edit\" button for the first event in the list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Edit Event\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"Updated Event Title\" into the Title field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Save\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"success\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Updated Event Title\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC035",
+    "title": "Edit an event and cancel without saving",
+    "description": "Verifies an admin can open the edit UI and cancel/close it without changing the event list.",
+    "category": "Manage Events",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the username or email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Manage Events\" in the admin navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a table or list of events is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Edit\" button for the first event in the list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Edit Event\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"Title Not To Save\" into the Title field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Cancel\" or \"Close\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Edit Event\" is not visible"
+      }
+    ]
+  },
+  {
+    "id": "TC036",
+    "title": "Delete an event successfully and verify it is removed from the list",
+    "description": "Verifies an admin can delete an event, confirm deletion, and see success notification and removal from the list.",
+    "category": "Manage Events",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the username or email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Manage Events\" in the admin navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a table or list of events is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Delete\" button for the first event in the list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Confirm\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Confirm\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"success\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the events list is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC037",
+    "title": "Cancel event deletion from the confirmation prompt",
+    "description": "Verifies an admin can initiate delete but cancel at confirmation so the event remains visible.",
+    "category": "Manage Events",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the username or email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Manage Events\" in the admin navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a table or list of events is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Delete\" button for the first event in the list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Confirm\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Cancel\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the events list is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC038",
+    "title": "Validate required fields when saving an edited event",
+    "description": "Verifies the edit form enforces required fields and prevents saving when required data is missing.",
+    "category": "Manage Events",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the username or email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Manage Events\" in the admin navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a table or list of events is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Edit\" button for the first event in the list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Edit Event\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"\" into the Title field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Save\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"required\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC039",
+    "title": "Verify Manage Events page shows key columns and action controls",
+    "description": "Verifies the Manage Events list renders expected columns and action buttons for each event.",
+    "category": "Manage Events",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the username or email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Manage Events\" in the admin navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Title\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Date\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Published\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Edit\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Delete\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC040",
+    "title": "View participants table for an event with registrations",
+    "description": "Verifies an admin can open an event’s participants view and see a table with Name, Email, and Joined date columns.",
+    "category": "Participants",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin\""
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Participants\" navigation item"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/participants\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Name\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC041",
+    "title": "Participant table shows Email and Joined date columns",
+    "description": "Verifies the participants table displays the expected Email and Joined date columns for a populated event.",
+    "category": "Participants",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Participants\" navigation item"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Email\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Joined\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Participants\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC042",
+    "title": "Open participant details by clicking a participant row",
+    "description": "Verifies an admin can click a participant row and see a participant details view.",
+    "category": "Participants",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Participants\" navigation item"
+      },
+      {
+        "type": "action",
+        "description": "Click the first participant row in the participants table"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Participant\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Email\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC043",
+    "title": "Switch event selection and see participants update",
+    "description": "Verifies an admin can select a different event in the participants view and the participant list area updates accordingly.",
+    "category": "Participants",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Participants\" navigation item"
+      },
+      {
+        "type": "action",
+        "description": "Select a different event from the event selector dropdown"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Participants\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Name\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC044",
+    "title": "Empty state shown for event with no registrations",
+    "description": "Verifies selecting an event with no participants shows the empty state message.",
+    "category": "Participants",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Participants\" navigation item"
+      },
+      {
+        "type": "action",
+        "description": "Select an event that has no registrations from the event selector dropdown"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"No participants found\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/participants\""
+      }
+    ]
+  },
+  {
+    "id": "TC045",
+    "title": "Empty state persists when opening participants view for an empty event",
+    "description": "Verifies the admin remains on the participants page and sees the empty state for an event with no participants.",
+    "category": "Participants",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Participants\" navigation item"
+      },
+      {
+        "type": "action",
+        "description": "Select an event that has no registrations from the event selector dropdown"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"No participants found\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Participants\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC046",
+    "title": "Error handling when participants fail to load",
+    "description": "Verifies an error notification is shown and the admin remains on /admin/participants when loading participants fails.",
+    "category": "Participants",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Participants\" navigation item"
+      },
+      {
+        "type": "action",
+        "description": "Wait for the participants content area to finish loading"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Error\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/participants\""
+      }
+    ]
+  },
+  {
+    "id": "TC047",
+    "title": "Participants page renders core UI elements after login",
+    "description": "Verifies the participants page loads and shows recognizable UI elements indicating the page is ready for interaction.",
+    "category": "Participants",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123@gmali.com\" into the username/email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"admin123\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Login\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Participants\" navigation item"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/admin/participants\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Participants\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Name\" is visible"
+      }
+    ]
+  }
+]

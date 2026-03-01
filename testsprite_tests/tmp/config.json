@@ -1,0 +1,18 @@
+{
+  "status": "commited",
+  "type": "frontend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:5173",
+  "executionArgs": {
+    "projectName": "MY NEW APP",
+    "projectPath": "c:\\Users\\ASUS\\Desktop\\MY NEW APP",
+    "testIds": [],
+    "additionalInstruction": "",
+    "serverMode": "development",
+    "envs": {
+      "API_KEY": "sk-user-0ZoU8T_xLvawsKUiiWgRw5imwdnRhsg_WR7jJJHOunLtjVeSJZkUclAzB1V40rcR2ig-sS8ehhVtZ3v3ETZnttdbRCCeEQ2SYMPIZb_-aL4HPa-Ru3Hhw1qG_tajpKJRb2c"
+    }
+  },
+  "serverPort": 63497,
+  "proxy": "http://fb55c9b3-cabf-4dba-8827-689f1656dee6:8iwrw5GF0J48J8kwpt9Q69VOja651CL5@tun.testsprite.com:8080"
+}
