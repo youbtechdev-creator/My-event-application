@@ -37,7 +37,7 @@ async def run_test():
         frame = context.pages[-1]
         await expect(frame.locator('text=No events').first).to_be_visible(timeout=3000)
         await expect(frame.locator('text=available').first).to_be_visible(timeout=3000)
-        await expect(frame.locator("xpath=//div[contains(@class,'event-card')]").first).not_to_be_visible(timeout=3000)
+        await expect(frame.locator('xpath=//div[contains(@class,"event-card")]').first).not_to_be_visible(timeout=3000)
         await asyncio.sleep(5)
 
     finally:

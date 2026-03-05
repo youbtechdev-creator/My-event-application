@@ -33,7 +33,7 @@ async def run_test():
         # -> Navigate to http://localhost:5173
         await page.goto("http://localhost:5173", wait_until="commit", timeout=10000)
         
-        # -> Click the first event card (index 468) to navigate to its details page and then verify the details.
+        # -> Click the first event card (element index 503) to navigate to the event details page.
         frame = context.pages[-1]
         # Click element
         elem = frame.locator('xpath=/html/body/div/div/main/div[3]/div').nth(0)
@@ -41,9 +41,8 @@ async def run_test():
         
         # --> Assertions to verify final state
         frame = context.pages[-1]
-        # Verify that an event card exists on the page
-        # The available elements list does not include any xpath for an event card, so we cannot perform the requested assertions.
-        raise AssertionError("Required element 'an event card' not found in available elements; marking task as done.")
+        # The page's Available elements do not include an event card element to assert visibility on.
+        raise AssertionError("Element 'an event card' not found in the provided Available elements; cannot verify its visibility or proceed with the test.")
         await asyncio.sleep(5)
 
     finally:

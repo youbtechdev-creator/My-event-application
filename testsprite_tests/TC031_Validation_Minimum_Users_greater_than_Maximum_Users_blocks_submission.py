@@ -1,0 +1,148 @@
+import asyncio
+from playwright import async_api
+from playwright.async_api import expect
+
+async def run_test():
+    pw = None
+    browser = None
+    context = None
+
+    try:
+        # Start a Playwright session in asynchronous mode
+        pw = await async_api.async_playwright().start()
+
+        # Launch a Chromium browser in headless mode with custom arguments
+        browser = await pw.chromium.launch(
+            headless=True,
+            args=[
+                "--window-size=1280,720",         # Set the browser window size
+                "--disable-dev-shm-usage",        # Avoid using /dev/shm which can cause issues in containers
+                "--ipc=host",                     # Use host-level IPC for better stability
+                "--single-process"                # Run the browser in a single process mode
+            ],
+        )
+
+        # Create a new browser context (like an incognito window)
+        context = await browser.new_context()
+        context.set_default_timeout(5000)
+
+        # Open a new page in the browser context
+        page = await context.new_page()
+
+        # Interact with the page elements to simulate user flow
+        # -> Navigate to http://localhost:5173
+        await page.goto("http://localhost:5173", wait_until="commit", timeout=10000)
+        
+        # -> Navigate to /admin/login (use exact path http://localhost:5173/admin/login as the test step explicitly requires).
+        await page.goto("http://localhost:5173/admin/login", wait_until="commit", timeout=10000)
+        
+        # -> Fill the email field with 'admin123@gmali.com', fill the password field with 'admin123', then click the Login button to attempt sign-in and proceed to verify the dashboard URL.
+        frame = context.pages[-1]
+        # Input text
+        elem = frame.locator('xpath=/html/body/div/div/div/form/div/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('admin123@gmali.com')
+        
+        frame = context.pages[-1]
+        # Input text
+        elem = frame.locator('xpath=/html/body/div/div/div/form/div[2]/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('admin123')
+        
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/div/div/div/form/button').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+        # -> Refill the email and password fields (to ensure inputs are present) and click the Login button to sign in.
+        frame = context.pages[-1]
+        # Input text
+        elem = frame.locator('xpath=/html/body/div/div/div/form/div/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('admin123@gmali.com')
+        
+        frame = context.pages[-1]
+        # Input text
+        elem = frame.locator('xpath=/html/body/div/div/div/form/div[2]/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('admin123')
+        
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/div/div/div/form/button').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+        # -> Fill Email (index 804) with 'admin123@gmali.com', fill Password (index 805) with 'admin123', then click Login (index 806).
+        frame = context.pages[-1]
+        # Input text
+        elem = frame.locator('xpath=/html/body/div/div/div/form/div/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('admin123@gmali.com')
+        
+        frame = context.pages[-1]
+        # Input text
+        elem = frame.locator('xpath=/html/body/div/div/div/form/div[2]/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('admin123')
+        
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/div/div/div/form/button').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+        # -> Click the 'Add Event' button in the sidebar to open the Add Event form (index 1156).
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/div/div/aside/nav/button[2]').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+        # -> Fill the Add Event form with invalid values (Minimum Users > Maximum Users), submit the form, then check for an inline validation message containing 'minimum' and verify the URL remains '/admin/add-event'.
+        frame = context.pages[-1]
+        # Input text
+        elem = frame.locator('xpath=/html/body/div/div/div[2]/div/div/div/div/form/div/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('Automation Test Event - Invalid Min/Max')
+        
+        frame = context.pages[-1]
+        # Input text
+        elem = frame.locator('xpath=/html/body/div/div/div[2]/div/div/div/div/form/div[2]/textarea').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('Testing validation when min users exceeds max users.')
+        
+        frame = context.pages[-1]
+        # Input text
+        elem = frame.locator('xpath=/html/body/div/div/div[2]/div/div/div/div/form/div[3]/div/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('2026-03-10T10:00')
+        
+        # -> Set Minimum Users to 50 (index 1550), Maximum Users to 10 (index 1551), set Location to 'Test Location' (index 1549), select Category 'Business' (index 1543), click Create Event (index 1716), wait for response, then search the page for the inline validation text 'minimum' and verify URL remains '/admin/add-event'.
+        frame = context.pages[-1]
+        # Input text
+        elem = frame.locator('xpath=/html/body/div/div/div[2]/div/div/div/div/form/div[4]/div/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('50')
+        
+        frame = context.pages[-1]
+        # Input text
+        elem = frame.locator('xpath=/html/body/div/div/div[2]/div/div/div/div/form/div[4]/div[2]/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('10')
+        
+        frame = context.pages[-1]
+        # Input text
+        elem = frame.locator('xpath=/html/body/div/div/div[2]/div/div/div/div/form/div[3]/div[2]/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('Test Location')
+        
+        # -> Select Category 'Business' from the Category dropdown (index 2159), click Create Event (index 2331), wait for response, then extract any visible text containing 'minimum' and verify the URL remains '/admin/add-event'.
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/div/div/div[2]/div/div/div/div/form/div[7]/button[2]').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+        # --> Assertions to verify final state
+        frame = context.pages[-1]
+        assert '/admin/dashboard' in frame.url
+        assert '/admin/add-event' in frame.url
+        await expect(frame.locator('text=minimum').first).to_be_visible(timeout=3000)
+        assert '/admin/add-event' in frame.url
+        await asyncio.sleep(5)
+
+    finally:
+        if context:
+            await context.close()
+        if browser:
+            await browser.close()
+        if pw:
+            await pw.stop()
+
+asyncio.run(run_test())
+    

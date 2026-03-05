@@ -33,12 +33,49 @@ async def run_test():
         # -> Navigate to http://localhost:5173
         await page.goto("http://localhost:5173", wait_until="commit", timeout=10000)
         
+        # -> Click on the first visible event's 'View & Join' button to open the Event Details page
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/div/div[1]/main/div[3]/div[1]/div[3]/button').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+        # -> Click on the first visible event's 'View & Join' button using a fresh interactive element index.
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/div/div/main/div[3]/div/div[3]/button').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+        # -> Input 'Test User' into Full Name, input 'not-an-email' into Email, click Join, then wait for validation messages to appear so assertions can be checked.
+        frame = context.pages[-1]
+        # Input text
+        elem = frame.locator('xpath=/html/body/div/div[1]/div/div[7]/form/div[1]/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('Test User')
+        
+        frame = context.pages[-1]
+        # Input text
+        elem = frame.locator('xpath=/html/body/div/div[1]/div/div[7]/form/div[2]/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('not-an-email')
+        
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/div/div/div/div[7]/form/button').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+        # -> Click the 'Join' button to submit the form (use element index 1637), then wait for validation messages to appear.
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/div/div/div/div[7]/form/button').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
         # --> Assertions to verify final state
         frame = context.pages[-1]
-        assert '/event/' in frame.url
-        await expect(frame.locator('text=valid').first).to_be_visible(timeout=3000)
-        await expect(frame.locator('text=Email').first).to_be_visible(timeout=3000)
-        assert '/event/' in frame.url
+        await page.wait_for_timeout(1000)
+        assert "/event/" in frame.url
+        assert await frame.locator('xpath=/html/body/div[1]/div[1]/div/div[7]/form/div[1]/input').is_visible(), 'Full Name input is not visible'
+        assert await frame.locator('xpath=/html/body/div[1]/div[1]/div/div[7]/form/div[2]/input').is_visible(), 'Email input is not visible'
+        await page.wait_for_timeout(2000)
+        assert "/event/" in frame.url
+        raise AssertionError("Expected validation text 'valid' and 'Email' could not be asserted because no matching elements containing those texts are present in the provided Available elements list.")
         await asyncio.sleep(5)
 
     finally:

@@ -33,10 +33,10 @@ async def run_test():
         # -> Navigate to http://localhost:5173
         await page.goto("http://localhost:5173", wait_until="commit", timeout=10000)
         
-        # -> Navigate to /admin/login (http://localhost:5173/admin/login) as the test step explicitly requires, then check for the login form.
+        # -> Navigate to /admin/login (use navigate action as the test step explicitly requests).
         await page.goto("http://localhost:5173/admin/login", wait_until="commit", timeout=10000)
         
-        # -> Type the provided email into the Email field, type the wrong password into the Password field, click Sign In. After the page updates, verify the URL still contains '/admin/login' and that the page displays text containing 'invalid' (invalid credentials). Then mark the task done.
+        # -> Type the provided email into the email input, then type the wrong password into the password input, then click the Login button.
         frame = context.pages[-1]
         # Input text
         elem = frame.locator('xpath=/html/body/div/div/div/form/div/input').nth(0)
@@ -55,7 +55,7 @@ async def run_test():
         # --> Assertions to verify final state
         frame = context.pages[-1]
         assert '/admin/login' in frame.url
-        await expect(frame.locator('text=invalid').first).to_be_visible(timeout=3000)
+        await expect(frame.locator('text=Invalid credentials').first).to_be_visible(timeout=3000)
         await asyncio.sleep(5)
 
     finally:

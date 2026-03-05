@@ -35,24 +35,32 @@ async def run_test():
         
         # --> Assertions to verify final state
         frame = context.pages[-1]
-        # Verify page title contains "Event" by checking the visible site title element
-        title_text = (await frame.locator('xpath=/html/body/div/div[1]/nav/div/div[1]/span').text_content()) or ""
-        assert "Event" in title_text, f'Expected "Event" in page title element, got: {title_text}'
+        # Verify page title contains "Event"
+        title_text = await frame.locator('xpath=/html/body/div/div[1]/nav/div/div[1]/span').inner_text()
+        assert "Event" in title_text
         
-        # Verify text "Events" is visible in the nav
-        assert await frame.locator('xpath=/html/body/div/div[1]/nav/div/div[2]/button[1]').is_visible(), 'Events button is not visible'
+        # Verify text "Events" is visible
+        events_button = frame.locator('xpath=/html/body/div/div[1]/nav/div/div[2]/button[1]')
+        assert await events_button.is_visible()
         
-        # Verify an event card is visible (first event card container)
-        assert await frame.locator('xpath=/html/body/div/div[1]/main/div[3]/div[1]').is_visible(), 'Event card #1 is not visible'
+        # Verify an event card is visible
+        first_card = frame.locator('xpath=/html/body/div/div[1]/main/div[3]/div[1]')
+        assert await first_card.is_visible()
         
-        # Verify event title on a card is visible (first card title)
-        assert await frame.locator('xpath=/html/body/div/div[1]/main/div[3]/div[1]/div[2]/h3').is_visible(), 'Event title on card #1 is not visible'
+        # Verify event title on a card is visible
+        card_title = frame.locator('xpath=/html/body/div/div[1]/main/div[3]/div[1]/div[2]/h3')
+        assert await card_title.is_visible()
+        assert (await card_title.inner_text()).strip() != ""
         
-        # Verify event location on a card is visible (AI & Machine Learning Summit location)
-        assert await frame.locator('xpath=/html/body/div/div[1]/main/div[3]/div[2]/div[2]/div/div[3]/span').is_visible(), 'Event location on card #2 is not visible'
+        # Verify event location on a card is visible
+        event_location = frame.locator('xpath=/html/body/div/div[1]/main/div[3]/div[3]/div[2]/div/div[3]/span')
+        assert await event_location.is_visible()
+        assert (await event_location.inner_text()).strip() != ""
         
-        # Verify event time on a card is visible (AI & Machine Learning Summit time)
-        assert await frame.locator('xpath=/html/body/div/div[1]/main/div[3]/div[2]/div[2]/div/div[2]/span').is_visible(), 'Event time on card #2 is not visible'
+        # Verify event time on a card is visible
+        event_time = frame.locator('xpath=/html/body/div/div[1]/main/div[3]/div[3]/div[2]/div/div[2]/span')
+        assert await event_time.is_visible()
+        assert (await event_time.inner_text()).strip() != ""
         await asyncio.sleep(5)
 
     finally:

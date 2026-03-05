@@ -33,35 +33,15 @@ async def run_test():
         # -> Navigate to http://localhost:5173
         await page.goto("http://localhost:5173", wait_until="commit", timeout=10000)
         
-        # -> Use the explicit navigate action to go to /admin/login (http://localhost:5173/admin/login).
+        # -> Navigate to /admin/login by opening http://localhost:5173/admin/login (per explicit test step) to reach the admin login page.
         await page.goto("http://localhost:5173/admin/login", wait_until="commit", timeout=10000)
-        
-        # -> Type 'admin123@gmali.com' into the email field (index 642), type 'admin123' into the password field (index 649), then click the 'Sign In' button (index 652).
-        frame = context.pages[-1]
-        # Input text
-        elem = frame.locator('xpath=/html/body/div/div/div/form/div/input').nth(0)
-        await page.wait_for_timeout(3000); await elem.fill('admin123@gmali.com')
-        
-        frame = context.pages[-1]
-        # Input text
-        elem = frame.locator('xpath=/html/body/div/div/div/form/div[2]/input').nth(0)
-        await page.wait_for_timeout(3000); await elem.fill('admin123')
-        
-        frame = context.pages[-1]
-        # Click element
-        elem = frame.locator('xpath=/html/body/div/div/div/form/button').nth(0)
-        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
         # --> Assertions to verify final state
         frame = context.pages[-1]
-        # -> Assertions from test plan
-        assert "/admin/dashboard" in frame.url
-        # Verify text "Dashboard" is visible
-        assert await frame.locator('xpath=/html/body/div/div[1]/aside/nav/button[1]').is_visible()
-        # Verify element "Sidebar navigation" is visible (using Logout button inside sidebar)
-        assert await frame.locator('xpath=/html/body/div/div[1]/aside/div[2]/button').is_visible()
-        # Verify element "Top bar" is visible
-        assert await frame.locator('xpath=/html/body/div/div[1]/div[2]/header/div[2]/button').is_visible()
+        assert '/admin/dashboard' in frame.url
+        await expect(frame.locator('text=Dashboard').first).to_be_visible(timeout=3000)
+        await expect(frame.locator('xpath=//nav[@aria-label="Sidebar navigation"]').first).to_be_visible(timeout=3000)
+        await expect(frame.locator('xpath=//header[@aria-label="Top bar"]').first).to_be_visible(timeout=3000)
         await asyncio.sleep(5)
 
     finally:
