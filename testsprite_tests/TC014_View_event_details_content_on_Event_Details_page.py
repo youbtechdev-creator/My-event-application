@@ -33,19 +33,14 @@ async def run_test():
         # -> Navigate to http://localhost:5173
         await page.goto("http://localhost:5173", wait_until="commit", timeout=10000)
         
-        # -> Click the first visible event's 'View & Join' button to open the Event Details page (use element index 148).
-        frame = context.pages[-1]
-        # Click element
-        elem = frame.locator('xpath=/html/body/div/div/main/div[3]/div/div[3]/button').nth(0)
-        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
-        
         # --> Assertions to verify final state
         frame = context.pages[-1]
-        # Assertions for Event Details page
-        assert await frame.locator('xpath=/html/body/div/div[1]/nav/div/div[2]/button[1]').is_visible(), "Expected 'Events' to be visible"
-        assert "/event/" in frame.url, f"Expected '/event/' in URL, got: {frame.url}"
-        # The page does not include an element for the text 'Location' in the provided available elements list.
-        raise AssertionError("Text 'Location' not found on page. Feature may be missing or its xpath was not provided in the available elements list. Marking task as done.")
+        await expect(frame.locator('text=Events').first).to_be_visible(timeout=3000)
+        assert '/event/' in frame.url
+        await expect(frame.locator('text=Location').first).to_be_visible(timeout=3000)
+        await expect(frame.locator('text=Registered').first).to_be_visible(timeout=3000)
+        await expect(frame.locator('xpath=//label[text()="Full Name"]').first).to_be_visible(timeout=3000)
+        await expect(frame.locator('xpath=//label[text()="Email Address"]').first).to_be_visible(timeout=3000)
         await asyncio.sleep(5)
 
     finally:

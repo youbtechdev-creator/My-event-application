@@ -33,10 +33,10 @@ async def run_test():
         # -> Navigate to http://localhost:5173
         await page.goto("http://localhost:5173", wait_until="commit", timeout=10000)
         
-        # -> Navigate to /admin/login (http://localhost:5173/admin/login) to load the admin login page and continue the test.
+        # -> Navigate to /admin/login (explicit test step).
         await page.goto("http://localhost:5173/admin/login", wait_until="commit", timeout=10000)
         
-        # -> Fill the email and password fields and click 'Sign In'. After that, wait for the dashboard to load and verify the URL contains '/admin/dashboard'.
+        # -> Type 'admin123@gmali.com' into the email field, type 'admin123' into the password field, then click the Login button.
         frame = context.pages[-1]
         # Input text
         elem = frame.locator('xpath=/html/body/div/div/div/form/div/input').nth(0)
@@ -52,7 +52,13 @@ async def run_test():
         elem = frame.locator('xpath=/html/body/div/div/div/form/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
-        # -> Click the 'Add Event' button in the left sidebar to navigate to the Add Event page and then verify the Add Event page loads.
+        # -> Click the 'Add Event' button in the sidebar to navigate to the Add Event page and trigger the route change.
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/div/div/aside/nav/button[2]').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+        # -> Click the 'Add Event' button in the sidebar using the current interactive element index (992) to navigate to the Add Event page.
         frame = context.pages[-1]
         # Click element
         elem = frame.locator('xpath=/html/body/div/div/aside/nav/button[2]').nth(0)
@@ -60,11 +66,16 @@ async def run_test():
         
         # --> Assertions to verify final state
         frame = context.pages[-1]
-        await page.wait_for_timeout(2000)
+        frame = context.pages[-1]
+        # Verify we are on the dashboard page after login
         assert "/admin/dashboard" in frame.url
-        await page.wait_for_timeout(2000)
+        
+        # Verify the Add Event page route is active
         assert "/admin/add-event" in frame.url
-        elem = frame.locator('xpath=/html/body/div/div[1]/aside/nav/button[2]')
+        
+        # Verify the sidebar 'Add Event' text is visible
+        elem = frame.locator('xpath=/html/body/div/div[1]/aside/nav/button[2]').nth(0)
+        await elem.wait_for(state="visible", timeout=5000)
         assert await elem.is_visible()
         await asyncio.sleep(5)
 

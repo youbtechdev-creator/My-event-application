@@ -33,35 +33,46 @@ async def run_test():
         # -> Navigate to http://localhost:5173
         await page.goto("http://localhost:5173", wait_until="commit", timeout=10000)
         
-        # -> Click on the first visible event in the events list by clicking the 'View & Join' button (element index 148).
-        frame = context.pages[-1]
-        # Click element
-        elem = frame.locator('xpath=/html/body/div/div/main/div[3]/div/div[3]/button').nth(0)
-        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        # -> Navigate to /admin/login (use explicit navigate to http://localhost:5173/admin/login as required by the test).
+        await page.goto("http://localhost:5173/admin/login", wait_until="commit", timeout=10000)
         
-        # -> Type 'Test User' into the 'Full Name' field (index 786) and click the 'Join' button (index 937) to trigger validation for missing Email.
+        # -> Fill the admin login form with the provided credentials and submit: enter email 'admin123@gmali.com', enter password 'admin123', then click Login.
         frame = context.pages[-1]
         # Input text
-        elem = frame.locator('xpath=/html/body/div/div/div/div[7]/form/div/input').nth(0)
-        await page.wait_for_timeout(3000); await elem.fill('Test User')
+        elem = frame.locator('xpath=/html/body/div/div/div/form/div/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('admin123@gmali.com')
+        
+        frame = context.pages[-1]
+        # Input text
+        elem = frame.locator('xpath=/html/body/div/div/div/form/div[2]/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('admin123')
         
         frame = context.pages[-1]
         # Click element
-        elem = frame.locator('xpath=/html/body/div/div/div/div[7]/form/button').nth(0)
+        elem = frame.locator('xpath=/html/body/div/div/div/form/button').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+        # -> Fill the admin login form with email 'admin123@gmali.com' and password 'admin123', then click the Login button.
+        frame = context.pages[-1]
+        # Input text
+        elem = frame.locator('xpath=/html/body/div/div/div/form/div/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('admin123@gmali.com')
+        
+        frame = context.pages[-1]
+        # Input text
+        elem = frame.locator('xpath=/html/body/div/div/div/form/div[2]/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('admin123')
+        
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/div/div/div/form/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
         # --> Assertions to verify final state
         frame = context.pages[-1]
-        frame = context.pages[-1]
-        # Verify we navigated to an event page after clicking the event
-        assert "/event/" in frame.url
-        # Verify 'Email' field is visible (use the email input element from available elements)
-        elem = frame.locator('xpath=/html/body/div[1]/div[1]/div/div[7]/form/div[2]/input')
-        assert await elem.is_visible()
-        # Verify validation text 'required' is visible - not present in available elements, report issue
-        raise AssertionError('Text "required" not found in available elements; cannot verify validation error visibility')
-        # Final URL sanity check (will not be reached if the above raises)
-        assert "/event/" in frame.url
+        assert '/admin' in frame.url
+        assert '/admin/participants' in frame.url
+        await expect(frame.locator('text=Name').first).to_be_visible(timeout=3000)
         await asyncio.sleep(5)
 
     finally:

@@ -33,29 +33,13 @@ async def run_test():
         # -> Navigate to http://localhost:5173
         await page.goto("http://localhost:5173", wait_until="commit", timeout=10000)
         
-        # -> Click the first visible event's 'View & Join' button (join-btn-11 index 148) to open the event detail page.
+        # -> Click the first visible event's 'View & Join' button (index 148) to open the event page.
         frame = context.pages[-1]
         # Click element
         elem = frame.locator('xpath=/html/body/div/div/main/div[3]/div/div[3]/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
-        # -> Type 'Test User' into the Full Name field (index 680), then type the email into the Email field (index 687), then click the Join button (index 690).
-        frame = context.pages[-1]
-        # Input text
-        elem = frame.locator('xpath=/html/body/div/div/div/div[7]/form/div/input').nth(0)
-        await page.wait_for_timeout(3000); await elem.fill('Test User')
-        
-        frame = context.pages[-1]
-        # Input text
-        elem = frame.locator('xpath=/html/body/div/div/div/div[7]/form/div[2]/input').nth(0)
-        await page.wait_for_timeout(3000); await elem.fill('test.user+e2e@example.com')
-        
-        frame = context.pages[-1]
-        # Click element
-        elem = frame.locator('xpath=/html/body/div/div/div/div[7]/form/button').nth(0)
-        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
-        
-        # -> Enter 'Test User' into Full Name (index=741) and 'test.user+e2e@example.com' into Email (index=742), then click the Join button (index=892). After that, verify success text and that 'Registered' is updated.
+        # -> Fill 'Full Name' with 'Test User', fill 'Email Address' with 'test.user+e2e@example.com', then click the 'Join' button to submit the registration.
         frame = context.pages[-1]
         # Input text
         elem = frame.locator('xpath=/html/body/div/div/div/div[7]/form/div/input').nth(0)
@@ -73,15 +57,9 @@ async def run_test():
         
         # --> Assertions to verify final state
         frame = context.pages[-1]
-        # Ensure we're checking the latest page/frame
-        frame = context.pages[-1]
-        
-        # Assert the URL contains '/event/' as required by the test plan
-        assert "/event/" in frame.url, f"Expected '/event/' in URL but got: {frame.url}"
-        
-        # The test plan requires verifying visibility of text 'success' and 'Registered'.
-        # These exact texts were not present in the provided list of available elements, so we cannot locate them with a provided xpath.
-        raise Exception("Cannot assert visibility: required texts 'success' and 'Registered' were not found in the provided available elements. Marking the task as done.")
+        assert '/event/' in frame.url
+        await expect(frame.locator('text=success').first).to_be_visible(timeout=3000)
+        await expect(frame.locator('text=Registered').first).to_be_visible(timeout=3000)
         await asyncio.sleep(5)
 
     finally:

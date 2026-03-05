@@ -33,10 +33,26 @@ async def run_test():
         # -> Navigate to http://localhost:5173
         await page.goto("http://localhost:5173", wait_until="commit", timeout=10000)
         
-        # -> Navigate to /admin/login (use exact path appended to base URL)
+        # -> Navigate to /admin/login (use navigate action to http://localhost:5173/admin/login)
         await page.goto("http://localhost:5173/admin/login", wait_until="commit", timeout=10000)
         
-        # -> Type 'admin123@gmali.com' into the email field (index 591), type 'admin123' into the password field (index 592), then click the 'Sign In' button (index 593). After that verify the dashboard URL and proceed to click 'Manage Events' in the sidebar.
+        # -> Input email into the Email Address field (index 638), then password into the Password field (index 639), then click the Login button (index 640).
+        frame = context.pages[-1]
+        # Input text
+        elem = frame.locator('xpath=/html/body/div/div/div/form/div/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('example@gmail.com')
+        
+        frame = context.pages[-1]
+        # Input text
+        elem = frame.locator('xpath=/html/body/div/div/div/form/div[2]/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('password123')
+        
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/div/div/div/form/button').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+        # -> Input the user-specified admin credentials into the login form and click Login to attempt to reach the dashboard (then verify /admin/dashboard).
         frame = context.pages[-1]
         # Input text
         elem = frame.locator('xpath=/html/body/div/div/div/form/div/input').nth(0)
@@ -52,30 +68,11 @@ async def run_test():
         elem = frame.locator('xpath=/html/body/div/div/div/form/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
-        # -> Click the 'Manage Events' sidebar button (index 736) to navigate to the Manage Events page.
-        frame = context.pages[-1]
-        # Click element
-        elem = frame.locator('xpath=/html/body/div/div/aside/nav/button[3]').nth(0)
-        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
-        
-        # -> Click the sidebar 'Manage Events' button (use fresh index 952) to navigate to the Manage Events page and then verify the Manage Events page loaded.
-        frame = context.pages[-1]
-        # Click element
-        elem = frame.locator('xpath=/html/body/div/div/aside/nav/button[3]').nth(0)
-        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
-        
         # --> Assertions to verify final state
         frame = context.pages[-1]
-        frame = context.pages[-1]
-        
-        assert "/admin/dashboard" in frame.url
-        
-        assert "/admin/manage-events" in frame.url
-        
-        elem = frame.locator('xpath=/html/body/div/div/aside/nav/button[3]').nth(0)
-        await elem.wait_for(state='visible', timeout=5000)
-        text = await elem.inner_text()
-        assert 'Manage' in text
+        assert '/admin/dashboard' in frame.url
+        assert '/admin/manage-events' in frame.url
+        await expect(frame.locator('text=Manage').first).to_be_visible(timeout=3000)
         await asyncio.sleep(5)
 
     finally:

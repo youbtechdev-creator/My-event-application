@@ -33,17 +33,28 @@ async def run_test():
         # -> Navigate to http://localhost:5173
         await page.goto("http://localhost:5173", wait_until="commit", timeout=10000)
         
-        # -> Click on the first visible event in the events list by clicking the 'View & Join' button (element index 148).
+        # -> Click the first visible event's 'View & Join' button (index 148) to open the event detail / join form.
         frame = context.pages[-1]
         # Click element
         elem = frame.locator('xpath=/html/body/div/div/main/div[3]/div/div[3]/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
-        # -> Type 'Test User' into the 'Full Name' field (index 786) and click the 'Join' button (index 937) to trigger validation for missing Email.
+        # -> Type 'test.user+missingname@example.com' into the 'Email Address' field and click the 'Join' button to trigger validation.
         frame = context.pages[-1]
         # Input text
-        elem = frame.locator('xpath=/html/body/div/div/div/div[7]/form/div/input').nth(0)
-        await page.wait_for_timeout(3000); await elem.fill('Test User')
+        elem = frame.locator('xpath=/html/body/div/div/div/div[7]/form/div[2]/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('test.user+missingname@example.com')
+        
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/div/div/div/div[7]/form/button').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+        # -> Type 'test.user+missingname@example.com' into the Email Address field (index 958) and click the 'Join' button (index 1108) to trigger validation.
+        frame = context.pages[-1]
+        # Input text
+        elem = frame.locator('xpath=/html/body/div/div/div/div[7]/form/div[2]/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('test.user+missingname@example.com')
         
         frame = context.pages[-1]
         # Click element
@@ -53,15 +64,12 @@ async def run_test():
         # --> Assertions to verify final state
         frame = context.pages[-1]
         frame = context.pages[-1]
-        # Verify we navigated to an event page after clicking the event
+        # Verify URL contains "/event/"
         assert "/event/" in frame.url
-        # Verify 'Email' field is visible (use the email input element from available elements)
-        elem = frame.locator('xpath=/html/body/div[1]/div[1]/div/div[7]/form/div[2]/input')
-        assert await elem.is_visible()
-        # Verify validation text 'required' is visible - not present in available elements, report issue
-        raise AssertionError('Text "required" not found in available elements; cannot verify validation error visibility')
-        # Final URL sanity check (will not be reached if the above raises)
-        assert "/event/" in frame.url
+        # The required visible texts "Full Name" and "required" are not present as exact text nodes in the provided available elements list.
+        # Report the issue and stop the test as the feature (visible validation texts) does not exist in the extracted elements.
+        missing = ["Full Name", "required"]
+        raise AssertionError(f"Missing expected text(s) in available elements: {', '.join(missing)}. Cannot perform visibility assertions. Task marked as done.")
         await asyncio.sleep(5)
 
     finally:

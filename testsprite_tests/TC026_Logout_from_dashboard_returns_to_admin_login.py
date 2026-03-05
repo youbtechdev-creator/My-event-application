@@ -33,10 +33,10 @@ async def run_test():
         # -> Navigate to http://localhost:5173
         await page.goto("http://localhost:5173", wait_until="commit", timeout=10000)
         
-        # -> Navigate to /admin/login (explicit test step provided). Use navigate action since no interactive elements present to click.
+        # -> Navigate to /admin/login (explicit instruction in test steps).
         await page.goto("http://localhost:5173/admin/login", wait_until="commit", timeout=10000)
         
-        # -> Type the email into the Email Address field, type the password into the Password field, then click the 'Sign In' button.
+        # -> Type 'admin123@gmali.com' into the email/email field (input index 638), then type password and click Login.
         frame = context.pages[-1]
         # Input text
         elem = frame.locator('xpath=/html/body/div/div/div/form/div/input').nth(0)
@@ -52,7 +52,7 @@ async def run_test():
         elem = frame.locator('xpath=/html/body/div/div/div/form/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
-        # -> Click the 'Logout' button on the dashboard to sign out (element index 973).
+        # -> Click the 'Logout' button (interactive element index 1016). After click, the next step will be to verify the URL contains '/admin/login' and that 'Admin Login' text is visible.
         frame = context.pages[-1]
         # Click element
         elem = frame.locator('xpath=/html/body/div/div/aside/div[2]/button').nth(0)
@@ -60,14 +60,16 @@ async def run_test():
         
         # --> Assertions to verify final state
         frame = context.pages[-1]
-        # -> Final assertions appended to the test script
         frame = context.pages[-1]
-        # Verify we were redirected to the admin dashboard after sign in
-        assert "/admin/dashboard" in frame.url, f"Expected '/admin/dashboard' in URL but got: {frame.url}"
-        # The test plan requires clicking a Logout button and then verifying return to /admin/login and that 'Admin Login' is visible.
-        # However, the Available elements list for the current page does not include any logout/dashboard elements or an element containing the text 'Admin Login'.
-        # Report the missing feature and mark the task as done.
-        raise AssertionError("Logout button or dashboard elements not present in the available elements; cannot perform logout or verify post-logout login page. Marking task as done.")
+        await page.wait_for_timeout(1000)
+        # Verify we reached the admin dashboard after login
+        assert "/admin/dashboard" in frame.url, f"Expected '/admin/dashboard' in URL, got: {frame.url}"
+        await page.wait_for_timeout(1000)
+        # Verify we returned to the admin login page after logout
+        assert "/admin/login" in frame.url, f"Expected '/admin/login' in URL, got: {frame.url}"
+        # The page elements provided do not include an element that explicitly contains the text 'Admin Login'.
+        # According to the test plan, we must verify the text 'Admin Login' is visible, but that element xpath is not present in the available elements list.
+        raise AssertionError("Element with text 'Admin Login' was not found in the provided available elements; cannot verify its visibility.")
         await asyncio.sleep(5)
 
     finally:

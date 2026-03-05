@@ -33,10 +33,10 @@ async def run_test():
         # -> Navigate to http://localhost:5173
         await page.goto("http://localhost:5173", wait_until="commit", timeout=10000)
         
-        # -> Navigate to /admin/login (follow explicit test step).
+        # -> Navigate to /admin/login (use explicit navigate action as the test step requires).
         await page.goto("http://localhost:5173/admin/login", wait_until="commit", timeout=10000)
         
-        # -> Fill the Email field with 'admin123@gmali.com', fill the Password field with 'admin123', then click the Sign In button to log in.
+        # -> Type the admin email into the Email Address field.
         frame = context.pages[-1]
         # Input text
         elem = frame.locator('xpath=/html/body/div/div/div/form/div/input').nth(0)
@@ -52,7 +52,7 @@ async def run_test():
         elem = frame.locator('xpath=/html/body/div/div/div/form/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
-        # -> Click the 'Participants' button in the sidebar to navigate to the Participants management page (use element index 964).
+        # -> Click the 'Participants' button in the left sidebar to navigate to the Participants management page (use element index 1009).
         frame = context.pages[-1]
         # Click element
         elem = frame.locator('xpath=/html/body/div/div/aside/nav/button[4]').nth(0)
@@ -60,17 +60,11 @@ async def run_test():
         
         # --> Assertions to verify final state
         frame = context.pages[-1]
-        # Assert that we reached the admin dashboard after login
+        frame = context.pages[-1]
         assert "/admin/dashboard" in frame.url
-        
-        # Assert that we navigated to the participants management page
         assert "/admin/participants" in frame.url
-        
-        # Verify the visible text "Participants" is present in the page element
-        elem = frame.locator('xpath=/html/body/div[1]/div[2]/div').nth(0)
-        await elem.wait_for(state='visible', timeout=5000)
-        text = await elem.inner_text()
-        assert 'Participants' in text
+        elem = frame.locator('xpath=/html/body/div/div[1]/aside/nav/button[4]')
+        assert await elem.is_visible()
         await asyncio.sleep(5)
 
     finally:

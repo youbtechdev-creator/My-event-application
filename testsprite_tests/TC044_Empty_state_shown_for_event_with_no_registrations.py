@@ -33,10 +33,10 @@ async def run_test():
         # -> Navigate to http://localhost:5173
         await page.goto("http://localhost:5173", wait_until="commit", timeout=10000)
         
-        # -> Navigate to /admin/login (http://localhost:5173/admin/login) as the test step explicitly requests, since no clickable navigation elements exist on the current page.
+        # -> Navigate to /admin/login (per test step: use exact path appended to current base URL).
         await page.goto("http://localhost:5173/admin/login", wait_until="commit", timeout=10000)
         
-        # -> Verify 'Admin Login' is visible, enter the provided credentials into the email and password fields, then click the Login button.
+        # -> Fill the admin email and password fields and click the Login button.
         frame = context.pages[-1]
         # Input text
         elem = frame.locator('xpath=/html/body/div/div/div/form/div/input').nth(0)
@@ -52,6 +52,28 @@ async def run_test():
         elem = frame.locator('xpath=/html/body/div/div/div/form/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
+        # -> Click the 'Participants' navigation item to open the participants page (use index 1009).
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/div/div/aside/nav/button[4]').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+        # -> Open the event selector dropdown by clicking the select control so the event options render (click element index 1530).
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/div/div/div[2]/div/div/div/div/div/select').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+        # -> Open the event dropdown and select the event 'You B Tech ( 0 participants)' (final allowed attempt). After selection, verify the empty-state message 'No participants found' is visible and that the URL contains '/admin/participants'. Then stop.
+        frame = context.pages[-1]
+        # Click element
+        elem = frame.locator('xpath=/html/body/div/div/div[2]/div/div/div/div/div/select').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+        # --> Assertions to verify final state
+        frame = context.pages[-1]
+        await expect(frame.locator('text=No participants found').first).to_be_visible(timeout=3000)
+        assert '/admin/participants' in frame.url
         await asyncio.sleep(5)
 
     finally:
