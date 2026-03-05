@@ -8,11 +8,11 @@
     "projectPath": "c:\\Users\\ASUS\\Desktop\\MY NEW APP",
     "testIds": [],
     "additionalInstruction": "",
-    "serverMode": "development",
+    "serverMode": "production",
     "envs": {
       "API_KEY": "sk-user-0ZoU8T_xLvawsKUiiWgRw5imwdnRhsg_WR7jJJHOunLtjVeSJZkUclAzB1V40rcR2ig-sS8ehhVtZ3v3ETZnttdbRCCeEQ2SYMPIZb_-aL4HPa-Ru3Hhw1qG_tajpKJRb2c"
     }
   },
-  "serverPort": 63497,
-  "proxy": "http://fb55c9b3-cabf-4dba-8827-689f1656dee6:8iwrw5GF0J48J8kwpt9Q69VOja651CL5@tun.testsprite.com:8080"
+  "serverPort": 58667,
+  "proxy": "http://9aab5783-4de0-4b5f-af47-7783de82a3cc:6WTifAvgezp8Mj70pBYZ1A2vCvG68n4j@tun.testsprite.com:8080"
 }
